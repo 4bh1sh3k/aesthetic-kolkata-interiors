@@ -1,23 +1,18 @@
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-interior.jpg";
-
 const Hero = () => {
   const scrollToContact = () => {
     const element = document.getElementById('contact');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
   };
-
-  return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+  return <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src={heroImage} 
-          alt="Luxury Interior Design"
-          className="w-full h-full object-cover"
-        />
+        <img src={heroImage} alt="Luxury Interior Design" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-warm-gray/90 via-warm-gray/70 to-transparent"></div>
       </div>
 
@@ -35,19 +30,10 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button 
-              onClick={scrollToContact}
-              variant="secondary" 
-              size="lg" 
-              className="font-body text-lg px-8 py-6 bg-luxury-gradient hover:shadow-luxury transition-all duration-300"
-            >
+            <Button onClick={scrollToContact} variant="secondary" size="lg" className="font-body text-lg px-8 py-6 bg-luxury-gradient hover:shadow-luxury transition-all duration-300">
               Start Your Project
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="font-body text-lg px-8 py-6 border-cream text-cream hover:bg-cream hover:text-warm-gray transition-all duration-300"
-            >
+            <Button variant="outline" size="lg" className="font-body text-lg px-8 py-6 border-cream hover:text-warm-gray transition-all duration-300 text-zinc-950 bg-neutral-950 hover:bg-neutral-800 rounded-lg">
               View Portfolio
             </Button>
           </div>
@@ -75,8 +61,6 @@ const Hero = () => {
           <div className="w-1 h-3 bg-cream/50 rounded-full animate-bounce mt-2"></div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
