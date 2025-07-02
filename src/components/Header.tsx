@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone } from "lucide-react";
+import { NavBar } from "@/components/ui/tubelight-navbar";
+import { Menu, X, Phone, Home, User, Briefcase, FileText } from "lucide-react";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const scrollToSection = (sectionId: string) => {
@@ -12,6 +13,13 @@ const Header = () => {
       setIsMenuOpen(false);
     }
   };
+
+  const navItems = [
+    { name: 'Home', url: '#home', icon: Home, onClick: () => scrollToSection('home') },
+    { name: 'About', url: '#about', icon: User, onClick: () => scrollToSection('about') },
+    { name: 'Services', url: '#services', icon: Briefcase, onClick: () => scrollToSection('services') },
+    { name: 'Portfolio', url: '#portfolio', icon: FileText, onClick: () => scrollToSection('portfolio') },
+  ];
   return <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-soft-gray">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
@@ -20,26 +28,9 @@ const Header = () => {
             Aesthetic Realcon
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <button onClick={() => scrollToSection('home')} className="font-body text-foreground hover:text-accent transition-colors">
-              Home
-            </button>
-            <button onClick={() => scrollToSection('about')} className="font-body text-foreground hover:text-accent transition-colors">
-              About
-            </button>
-            <button onClick={() => scrollToSection('services')} className="font-body text-foreground hover:text-accent transition-colors">
-              Services
-            </button>
-            <button onClick={() => scrollToSection('portfolio')} className="font-body text-foreground hover:text-accent transition-colors">
-              Portfolio
-            </button>
-            <button onClick={() => scrollToSection('testimonials')} className="font-body text-foreground hover:text-accent transition-colors">
-              Testimonials
-            </button>
-            <button onClick={() => scrollToSection('contact')} className="font-body text-foreground hover:text-accent transition-colors">
-              Contact
-            </button>
+          {/* Desktop Navigation - Now using TubeLight NavBar */}
+          <nav className="hidden md:block">
+            {/* NavBar will be rendered separately at top of page */}
           </nav>
 
           {/* Contact Button */}
@@ -84,6 +75,9 @@ const Header = () => {
             </nav>
           </div>}
       </div>
+
+      {/* TubeLight NavBar */}
+      <NavBar items={navItems} className="hidden md:block" />
     </header>;
 };
 export default Header;
