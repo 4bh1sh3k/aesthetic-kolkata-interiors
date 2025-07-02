@@ -19,7 +19,7 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-20">
         <div className="max-w-3xl animate-fade-in">
-          <h1 className="font-display text-5xl md:text-7xl font-bold text-cream mb-6 leading-tight">
+          <h1 className="font-display text-5xl md:text-7xl font-bold text-cream mb-6 leading-tight my-[20px]">
             Transform Your
             <span className="block text-luxury-gold">Living Spaces</span>
           </h1>
