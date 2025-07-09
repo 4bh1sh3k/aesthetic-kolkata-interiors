@@ -9,92 +9,58 @@ const Hero = () => {
       });
     }
   };
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  return (
-    <section 
-      id="home" 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url(${heroImage})`
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/80 to-background/70"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-secondary/20"></div>
+  return <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img src={heroImage} alt="Luxury Interior Design" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-warm-gray/90 via-warm-gray/70 to-transparent"></div>
       </div>
-      
+
       {/* Content */}
-      <div className="relative z-10 text-center max-w-5xl mx-auto px-6 animate-fade-up">
-        <h1 className="font-display text-6xl md:text-8xl font-bold mb-8 leading-tight">
-          <span className="bg-gradient-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent animate-glow">
-            Transform Your Space Into 
-          </span>
-          <span className="block mt-4 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
-            Aesthetic Reality
-          </span>
-        </h1>
-        
-        <p className="font-body text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed opacity-90">
-          Next-generation interior design solutions in Kolkata. From concept to completion, 
-          we create spaces that reflect your personality and elevate your lifestyle to new heights.
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-          <Button 
-            variant="premium"
-            size="lg" 
-            className="font-body text-lg"
-            onClick={scrollToContact}
-          >
-            Start Your Project
-          </Button>
-          <Button 
-            variant="outline" 
-            size="lg" 
-            className="font-body text-lg glow-border"
-            onClick={() => scrollToSection('portfolio')}
-          >
-            View Portfolio
-          </Button>
-        </div>
-        
-        {/* Statistics */}
-        <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto">
-          <div className="glass-card p-6 text-center hover:scale-105 transition-transform duration-300">
-            <div className="font-display text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-3">150+</div>
-            <div className="font-body text-muted-foreground">Projects Completed</div>
+      <div className="relative z-10 container mx-auto px-4 py-20">
+        <div className="max-w-3xl animate-fade-in">
+          <h1 className="font-display text-5xl md:text-7xl font-bold text-cream mb-6 leading-tight my-[20px]">
+            Transform Your
+            <span className="block text-luxury-gold">Living Spaces</span>
+          </h1>
+          
+          <p className="font-body text-xl md:text-2xl text-cream/90 mb-8 leading-relaxed">
+            Premium interior design services in Kolkata. We create sophisticated, 
+            functional spaces that reflect your unique style and elevate your lifestyle.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button onClick={scrollToContact} variant="secondary" size="lg" className="font-body text-lg px-8 py-6 bg-luxury-gradient hover:shadow-luxury transition-all duration-300">
+              Start Your Project
+            </Button>
+            <Button variant="outline" size="lg" className="font-body text-lg px-8 py-6 border-cream hover:text-warm-gray transition-all duration-300 bg-neutral-950 hover:bg-neutral-800 rounded-lg text-neutral-50">
+              View Portfolio
+            </Button>
           </div>
-          <div className="glass-card p-6 text-center hover:scale-105 transition-transform duration-300">
-            <div className="font-display text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-3">8+</div>
-            <div className="font-body text-muted-foreground">Years Experience</div>
-          </div>
-          <div className="glass-card p-6 text-center hover:scale-105 transition-transform duration-300">
-            <div className="font-display text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-3">100%</div>
-            <div className="font-body text-muted-foreground">Client Satisfaction</div>
+
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-cream/20">
+            <div className="text-center md:text-left">
+              <div className="font-display text-3xl font-bold text-luxury-gold mb-2">15+</div>
+              <div className="font-body text-cream/80">Years Experience</div>
+            </div>
+            <div className="text-center md:text-left">
+              <div className="font-display text-3xl font-bold text-luxury-gold mb-2">200+</div>
+              <div className="font-body text-cream/80">Projects Completed</div>
+            </div>
+            <div className="text-center md:text-left">
+              <div className="font-display text-3xl font-bold text-luxury-gold mb-2">100%</div>
+              <div className="font-body text-cream/80">Client Satisfaction</div>
+            </div>
           </div>
         </div>
       </div>
-      
+
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-12 border-2 border-accent rounded-full flex justify-center glow-border">
-          <div className="w-1 h-4 bg-gradient-to-b from-primary to-secondary rounded-full mt-3 animate-pulse"></div>
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+        <div className="w-6 h-10 border-2 border-cream/50 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-cream/50 rounded-full animate-bounce mt-2"></div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
 export default Hero;

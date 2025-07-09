@@ -58,26 +58,23 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5"></div>
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="contact" className="py-20 bg-background">
+      <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16 animate-fade-up">
-            <h2 className="font-display text-5xl md:text-6xl font-bold mb-8">
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Get In Touch
-              </span>
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-6">
+              Get In Touch
             </h2>
             <p className="font-body text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Ready to transform your space? Let's discuss your next-generation project and bring your vision to life.
+              Ready to transform your space? Let's discuss your project and bring your vision to life.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <Card className="glass-card animate-slide-up glow-border">
-              <CardContent className="p-10">
+            <Card className="shadow-elegant animate-slide-up">
+              <CardContent className="p-8">
                 <h3 className="font-display text-2xl font-semibold text-primary mb-6">
                   Start Your Project
                 </h3>
