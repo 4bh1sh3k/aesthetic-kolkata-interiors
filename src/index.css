@@ -164,13 +164,14 @@
   }
 
   .glow-border::after {
-    @apply absolute inset-0 rounded-inherit pointer-events-none;
+    @apply absolute inset-0 rounded-xl pointer-events-none;
     content: '';
     background: var(--electric-gradient);
     padding: 1px;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: xor;
     opacity: 0.5;
+    border-radius: inherit;
   }
 
   /* Smooth Animations */
