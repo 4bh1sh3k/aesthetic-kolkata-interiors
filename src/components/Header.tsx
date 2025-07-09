@@ -20,11 +20,11 @@ const Header = () => {
     { name: 'Services', url: '#services', icon: Briefcase, onClick: () => scrollToSection('services') },
     { name: 'Portfolio', url: '#portfolio', icon: FileText, onClick: () => scrollToSection('portfolio') },
   ];
-  return <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-soft-gray">
-      <div className="container mx-auto px-4 py-4">
+  return <header className="fixed top-0 left-0 right-0 z-50 glass-card">
+      <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="font-display font-bold text-2xl text-primary">
+          <div className="font-display font-bold text-3xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent animate-glow">
             Aesthetic Realcon
           </div>
 
