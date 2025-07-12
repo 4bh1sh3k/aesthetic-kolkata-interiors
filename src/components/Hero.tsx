@@ -9,7 +9,6 @@ const Hero = () => {
       });
     }
   };
-
   const scrollToPortfolio = () => {
     const element = document.getElementById('portfolio');
     if (element) {
@@ -39,15 +38,10 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button onClick={scrollToContact} variant="secondary" size="lg" className="font-body text-lg px-8 py-6 bg-luxury-gradient hover:shadow-luxury transition-all duration-300">
+            <Button onClick={scrollToContact} variant="secondary" size="lg" className="font-body text-lg px-8 py-6 bg-luxury-gradient hover:shadow-luxury transition-all duration-300 text-neutral-950">
               Start Your Project
             </Button>
-            <Button 
-              onClick={scrollToPortfolio}
-              variant="outline" 
-              size="lg" 
-              className="font-body text-lg px-8 py-6 border-cream hover:text-warm-gray transition-all duration-300 bg-neutral-950 hover:bg-neutral-800 rounded-lg text-neutral-50"
-            >
+            <Button onClick={scrollToPortfolio} variant="outline" size="lg" className="font-body text-lg px-8 py-6 border-cream hover:text-warm-gray transition-all duration-300 bg-neutral-950 hover:bg-neutral-800 rounded-lg text-neutral-50">
               View Portfolio
             </Button>
           </div>
