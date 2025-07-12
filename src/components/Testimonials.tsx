@@ -1,7 +1,70 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 import { Star } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Testimonials = () => {
+  const { toast } = useToast();
+  const [testimonialForm, setTestimonialForm] = useState({
+    name: "",
+    message: "",
+    rating: ""
+  });
+
+  const handleTestimonialSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!testimonialForm.name || !testimonialForm.message) {
+      toast({
+        title: "Please fill in all required fields",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('testimonials')
+        .insert({
+          name: testimonialForm.name,
+          message: testimonialForm.message,
+          rating: testimonialForm.rating
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Thank you for your feedback!",
+        description: "Your testimonial has been submitted successfully.",
+      });
+
+      setTestimonialForm({
+        name: "",
+        message: "",
+        rating: ""
+      });
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleTestimonialChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setTestimonialForm({
+      ...testimonialForm,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const testimonials = [
     {
       id: 1,
@@ -109,6 +172,73 @@ const Testimonials = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          {/* Testimonial Submission Form */}
+          <div className="mt-16 pt-16 border-t border-soft-gray">
+            <Card className="shadow-elegant max-w-2xl mx-auto">
+              <CardContent className="p-8">
+                <h3 className="font-display text-2xl font-semibold text-primary mb-6 text-center">
+                  Share Your Experience
+                </h3>
+                <form onSubmit={handleTestimonialSubmit} className="space-y-6">
+                  <div>
+                    <label className="font-body text-sm font-medium text-foreground mb-2 block">
+                      Your Name *
+                    </label>
+                    <Input
+                      type="text"
+                      name="name"
+                      value={testimonialForm.name}
+                      onChange={handleTestimonialChange}
+                      placeholder="Enter your name"
+                      required
+                      className="font-body"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="font-body text-sm font-medium text-foreground mb-2 block">
+                      Rating (Optional)
+                    </label>
+                    <select
+                      name="rating"
+                      value={testimonialForm.rating}
+                      onChange={handleTestimonialChange}
+                      className="w-full p-3 border border-input rounded-md font-body bg-background"
+                    >
+                      <option value="">Select rating</option>
+                      <option value="5">5 - Excellent</option>
+                      <option value="4">4 - Very Good</option>
+                      <option value="3">3 - Good</option>
+                      <option value="2">2 - Fair</option>
+                      <option value="1">1 - Poor</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="font-body text-sm font-medium text-foreground mb-2 block">
+                      Your Message *
+                    </label>
+                    <Textarea
+                      name="message"
+                      value={testimonialForm.message}
+                      onChange={handleTestimonialChange}
+                      placeholder="Share your experience with our services..."
+                      rows={5}
+                      required
+                      className="font-body"
+                    />
+                  </div>
+
+                  <div className="text-center">
+                    <Button type="submit" size="lg" className="font-body">
+                      Submit Testimonial
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Stats Section */}

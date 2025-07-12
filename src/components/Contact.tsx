@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -16,7 +17,7 @@ const Contact = () => {
     message: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Basic validation
@@ -28,20 +29,42 @@ const Contact = () => {
       return;
     }
 
-    // Here you would typically send the form data to your backend
-    toast({
-      title: "Thank you for your inquiry!",
-      description: "We'll get back to you within 24 hours.",
-    });
+    try {
+      // Submit to Supabase leads table
+      const { error } = await supabase
+        .from('leads')
+        .insert({
+          name: formData.name,
+          email: formData.email,
+          "phone no.": formData.phone,
+          project_type: formData.project,
+          project_details: formData.message
+        });
 
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      project: "",
-      message: ""
-    });
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Thank you for your inquiry!",
+        description: "We'll get back to you within 24 hours.",
+      });
+
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        project: "",
+        message: ""
+      });
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description: "Please try again or contact us directly.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleWhatsApp = () => {
