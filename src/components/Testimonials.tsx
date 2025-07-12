@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,11 +9,34 @@ import { supabase } from "@/integrations/supabase/client";
 
 const Testimonials = () => {
   const { toast } = useToast();
+  const [testimonials, setTestimonials] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [testimonialForm, setTestimonialForm] = useState({
     name: "",
     message: "",
     rating: ""
   });
+
+  // Fetch testimonials from database
+  const fetchTestimonials = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('testimonials')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setTestimonials(data || []);
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
 
   const handleTestimonialSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,6 +72,9 @@ const Testimonials = () => {
         message: "",
         rating: ""
       });
+
+      // Refresh testimonials to show the new one
+      fetchTestimonials();
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -65,67 +91,29 @@ const Testimonials = () => {
     });
   };
 
-  const testimonials = [
-    {
-      id: 1,
-      name: "Priya Sharma",
-      location: "Salt Lake, Kolkata",
-      project: "Complete Home Interior",
-      rating: 5,
-      content: "Aesthetic Realcon transformed our home beyond our expectations. Their attention to detail and understanding of our needs was exceptional. The team delivered on time and within budget."
-    },
-    {
-      id: 2,
-      name: "Rajesh Kumar",
-      location: "Park Street, Kolkata",
-      project: "Office Interior Design",
-      rating: 5,
-      content: "Professional, creative, and reliable. The office design has significantly improved our work environment and client impressions. Highly recommended for commercial projects."
-    },
-    {
-      id: 3,
-      name: "Anita Das",
-      location: "Ballygunge, Kolkata",
-      project: "Kitchen Renovation",
-      rating: 5,
-      content: "The kitchen renovation exceeded all our expectations. The team was professional, the design was stunning, and the execution was flawless. Our dream kitchen is now a reality."
-    },
-    {
-      id: 4,
-      name: "Suresh Gupta",
-      location: "New Town, Kolkata",
-      project: "Living Room Makeover",
-      rating: 5,
-      content: "From concept to completion, the entire process was smooth and enjoyable. The design team understood our vision perfectly and delivered a beautiful living space we love."
-    },
-    {
-      id: 5,
-      name: "Meera Singh",
-      location: "Alipore, Kolkata",
-      project: "Master Bedroom Design",
-      rating: 5,
-      content: "The bedroom design is absolutely gorgeous! The team created a perfect blend of comfort and luxury. Their professionalism and creativity are truly commendable."
-    },
-    {
-      id: 6,
-      name: "Vikram Agarwal",
-      location: "Sector V, Kolkata",
-      project: "Complete Office Fit-out",
-      rating: 5,
-      content: "Outstanding work on our office interiors. The team delivered a modern, functional workspace that has enhanced productivity and created a positive work environment."
-    }
-  ];
-
-  const renderStars = (rating: number) => {
+  const renderStars = (rating: string) => {
+    const numRating = parseInt(rating) || 0;
     return Array.from({ length: 5 }, (_, index) => (
       <Star
         key={index}
         className={`w-4 h-4 ${
-          index < rating ? 'text-luxury-gold fill-luxury-gold' : 'text-soft-gray'
+          index < numRating ? 'text-luxury-gold fill-luxury-gold' : 'text-soft-gray'
         }`}
       />
     ));
   };
+
+  if (loading) {
+    return (
+      <section id="testimonials" className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="font-body text-xl text-muted-foreground">Loading testimonials...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="testimonials" className="py-20 bg-muted/30">
@@ -143,36 +131,39 @@ const Testimonials = () => {
           </div>
 
           {/* Testimonials Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-slide-up">
-            {testimonials.map((testimonial) => (
-              <Card key={testimonial.id} className="shadow-elegant hover:shadow-luxury transition-all duration-300 group">
-                <CardContent className="p-6">
-                  {/* Rating */}
-                  <div className="flex items-center gap-1 mb-4">
-                    {renderStars(testimonial.rating)}
-                  </div>
+          {testimonials.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-slide-up">
+              {testimonials.map((testimonial) => (
+                <Card key={testimonial.id} className="shadow-elegant hover:shadow-luxury transition-all duration-300 group">
+                  <CardContent className="p-6">
+                    {/* Rating */}
+                    <div className="flex items-center gap-1 mb-4">
+                      {renderStars(testimonial.rating)}
+                    </div>
 
-                  {/* Content */}
-                  <p className="font-body text-muted-foreground leading-relaxed mb-6 italic">
-                    "{testimonial.content}"
-                  </p>
+                    {/* Content */}
+                    <p className="font-body text-muted-foreground leading-relaxed mb-6 italic">
+                      "{testimonial.message}"
+                    </p>
 
-                  {/* Client Info */}
-                  <div className="border-t border-soft-gray pt-4">
-                    <h4 className="font-display text-lg font-semibold text-primary">
-                      {testimonial.name}
-                    </h4>
-                    <p className="font-body text-sm text-accent mb-1">
-                      {testimonial.location}
-                    </p>
-                    <p className="font-body text-xs text-muted-foreground">
-                      {testimonial.project}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    {/* Client Info */}
+                    <div className="border-t border-soft-gray pt-4">
+                      <h4 className="font-display text-lg font-semibold text-primary">
+                        {testimonial.name}
+                      </h4>
+                      <p className="font-body text-xs text-muted-foreground">
+                        {new Date(testimonial.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="font-body text-muted-foreground">No testimonials yet. Be the first to share your experience!</p>
+            </div>
+          )}
 
           {/* Testimonial Submission Form */}
           <div className="mt-16 pt-16 border-t border-soft-gray">
