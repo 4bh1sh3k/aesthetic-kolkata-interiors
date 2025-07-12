@@ -9,6 +9,13 @@ import bedroomImage from "@/assets/bedroom-interior.jpg";
 const Portfolio = () => {
   const [filter, setFilter] = useState("all");
 
+  const scrollToContact = () => {
+    const element = document.getElementById('contact');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const projects = [
     {
       id: 1,
@@ -137,7 +144,12 @@ const Portfolio = () => {
             <p className="font-body text-muted-foreground mb-6">
               Ready to see your vision come to life?
             </p>
-            <Button variant="secondary" size="lg" className="font-body px-8">
+            <Button 
+              variant="secondary" 
+              size="lg" 
+              className="font-body px-8"
+              onClick={scrollToContact}
+            >
               Start Your Project
             </Button>
           </div>

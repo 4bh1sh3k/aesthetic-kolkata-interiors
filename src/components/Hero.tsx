@@ -9,6 +9,15 @@ const Hero = () => {
       });
     }
   };
+
+  const scrollToPortfolio = () => {
+    const element = document.getElementById('portfolio');
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  };
   return <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
@@ -33,7 +42,12 @@ const Hero = () => {
             <Button onClick={scrollToContact} variant="secondary" size="lg" className="font-body text-lg px-8 py-6 bg-luxury-gradient hover:shadow-luxury transition-all duration-300">
               Start Your Project
             </Button>
-            <Button variant="outline" size="lg" className="font-body text-lg px-8 py-6 border-cream hover:text-warm-gray transition-all duration-300 bg-neutral-950 hover:bg-neutral-800 rounded-lg text-neutral-50">
+            <Button 
+              onClick={scrollToPortfolio}
+              variant="outline" 
+              size="lg" 
+              className="font-body text-lg px-8 py-6 border-cream hover:text-warm-gray transition-all duration-300 bg-neutral-950 hover:bg-neutral-800 rounded-lg text-neutral-50"
+            >
               View Portfolio
             </Button>
           </div>
